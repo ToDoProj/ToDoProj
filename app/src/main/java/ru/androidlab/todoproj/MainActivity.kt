@@ -2,19 +2,15 @@ package ru.androidlab.todoproj
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Window
 import com.google.android.material.tabs.TabLayout
-import ru.androidlab.todoproj.adapters.Adapter
 import ru.androidlab.todoproj.databinding.ActivityMainBinding
-import ru.androidlab.todoproj.util.MockUtil
 import ru.androidlab.todoproj.views.fragments.TasksFragment
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var binding = ActivityMainBinding.inflate(layoutInflater)
+        val binding = ActivityMainBinding.inflate(layoutInflater)
         val fragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) ?: TasksFragment()
 
         savedInstanceState ?: supportFragmentManager.beginTransaction().apply {

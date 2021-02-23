@@ -2,7 +2,8 @@ package ru.androidlab.todoproj.adapters
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import ru.androidlab.todoproj.data.Task
 
 abstract class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    abstract fun bind(item: Item)
+    abstract fun bind(item: Task)
 }

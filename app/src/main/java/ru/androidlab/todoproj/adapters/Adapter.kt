@@ -4,9 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import ru.androidlab.todoproj.data.Task
 import ru.androidlab.todoproj.databinding.ItemHolderBinding
 
-class Adapter(private val listener: IMovieClick) : ListAdapter<Item, BaseViewHolder>(MoviesDiffCallback){
+class Adapter(private val listener: IMovieClick) :
+    ListAdapter<Task, BaseViewHolder>(MoviesDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return Holder(parent)
@@ -20,11 +22,17 @@ class Adapter(private val listener: IMovieClick) : ListAdapter<Item, BaseViewHol
         return currentList.size
     }
 
-    inner class Holder(private val binding: ItemHolderBinding) :  BaseViewHolder(binding.root) {
-        constructor(parent: ViewGroup) : this(ItemHolderBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    inner class Holder(private val binding: ItemHolderBinding) : BaseViewHolder(binding.root) {
+        constructor(parent: ViewGroup) : this(
+            ItemHolderBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
 
-        override fun bind(item: Item) {
-            item as Item.Card
+        override fun bind(item: Task) {
+            item as Task.AlarmTask
             binding.apply {
                 textTitle.text = item.textTitle
                 textTime.text = item.textTime
@@ -36,25 +44,21 @@ class Adapter(private val listener: IMovieClick) : ListAdapter<Item, BaseViewHol
     }
 
     interface IMovieClick {
-        fun showToast(position: Item)
-  //      fun onDelete(position: Item)
+        fun showToast(position: Task)
     }
 
-    object MoviesDiffCallback : DiffUtil.ItemCallback<Item>(){
-        override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
+    object MoviesDiffCallback : DiffUtil.ItemCallback<Task>() {
+        override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
             return when {
-                oldItem is Item.Card && newItem is Item.Card -> {
+                oldItem is Task.AlarmTask && newItem is Task.AlarmTask -> {
                     oldItem.textTitle == newItem.textTitle
                 }
                 else -> true
             }
         }
 
-        override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
+        override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
             return areItemsTheSame(oldItem, newItem)
         }
     }
-
 }
-
-

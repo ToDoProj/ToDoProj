@@ -1,14 +1,15 @@
 package ru.androidlab.todoproj.views.fragments
 
-import android.app.Activity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
+import ru.androidlab.todoproj.R
 import ru.androidlab.todoproj.adapters.Adapter
-import ru.androidlab.todoproj.adapters.Item
+import ru.androidlab.todoproj.data.Task
 import ru.androidlab.todoproj.databinding.FragmentTasksBinding
 import ru.androidlab.todoproj.util.MockUtil
 
@@ -32,7 +33,29 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
 
         binding.recyclerView.adapter = adapter
         adapter.submitList(MockUtil.geList())
+        showAndHideFloatingActionButton()
+        binding.floatingActionButton.setOnClickListener {
+            val list = adapter.currentList.toMutableList().also {
+                it.add(
+                    Task.AlarmTask("Shopp", "till 5:00 pm", R.drawable.alarm_clock, "4:30")
+                )
+            }
+            adapter.submitList(list)
+        }
 
+    }
+
+    private fun showAndHideFloatingActionButton() {
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0 && binding.floatingActionButton.visibility == View.VISIBLE) {
+                    binding.floatingActionButton.hide()
+                } else if (dy < 0 && binding.floatingActionButton.visibility != View.VISIBLE) {
+                    binding.floatingActionButton.show()
+                }
+                super.onScrolled(recyclerView, dx, dy)
+            }
+        })
     }
 
     override fun onDestroyView() {
@@ -40,9 +63,7 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
         _binding = null
     }
 
-    override fun showToast(position: Item) {
+    override fun showToast(position: Task) {
         Toast.makeText(activity, "it's ${position}", Toast.LENGTH_LONG).show()
     }
-
 }
-
