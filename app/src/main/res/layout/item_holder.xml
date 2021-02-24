@@ -21,21 +21,21 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@id/textTime"
+            app:layout_constraintBottom_toTopOf="@id/description"
             app:layout_constraintEnd_toStartOf="@id/alarm_clock"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Title" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textTime"
+            android:id="@+id/description"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="48dp"
             android:layout_marginBottom="16dp"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/time"
+            app:layout_constraintEnd_toStartOf="@id/priority"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textTitle"
             tools:text="time" />
@@ -48,19 +48,19 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:src="@drawable/alarm_clock"
-            app:layout_constraintBottom_toTopOf="@id/time"
+            app:layout_constraintBottom_toTopOf="@id/priority"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/textTitle"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/time"
+            android:id="@+id/priority"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:text="4:20"
+            android:text="low"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

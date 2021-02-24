@@ -34,10 +34,9 @@ class Adapter(private val listener: IMovieClick) :
         override fun bind(item: Task) {
             item as Task.AlarmTask
             binding.apply {
-                textTitle.text = item.textTitle
-                textTime.text = item.textTime
-                alarmClock.setImageResource(item.alarmClockImage)
-                time.text = item.time
+                textTitle.text = item.title
+                description.text = item.description
+                priority.text = item.priority
                 root.setOnClickListener { listener.showToast(item) }
             }
         }
@@ -51,7 +50,7 @@ class Adapter(private val listener: IMovieClick) :
         override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
             return when {
                 oldItem is Task.AlarmTask && newItem is Task.AlarmTask -> {
-                    oldItem.textTitle == newItem.textTitle
+                    oldItem.title == newItem.title
                 }
                 else -> true
             }

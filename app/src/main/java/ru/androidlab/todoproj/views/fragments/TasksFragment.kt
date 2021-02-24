@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import ru.androidlab.todoproj.R
 import ru.androidlab.todoproj.adapters.Adapter
 import ru.androidlab.todoproj.data.Task
 import ru.androidlab.todoproj.databinding.FragmentTasksBinding
@@ -33,16 +32,16 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
 
         binding.recyclerView.adapter = adapter
         adapter.submitList(MockUtil.geList())
+
         showAndHideFloatingActionButton()
         binding.floatingActionButton.setOnClickListener {
             val list = adapter.currentList.toMutableList().also {
                 it.add(
-                    Task.AlarmTask("Shopp", "till 5:00 pm", R.drawable.alarm_clock, "4:30")
+                    Task.AlarmTask(1,"Shopp", "till 5:00 pm","low")
                 )
             }
             adapter.submitList(list)
         }
-
     }
 
     private fun showAndHideFloatingActionButton() {
@@ -64,6 +63,6 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
     }
 
     override fun showToast(position: Task) {
-        Toast.makeText(activity, "it's ${position}", Toast.LENGTH_LONG).show()
+        Toast.makeText(activity, "it's $position", Toast.LENGTH_LONG).show()
     }
 }
