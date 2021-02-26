@@ -1,27 +1,36 @@
 package ru.androidlab.todoproj.views.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import ru.androidlab.todoproj.R
 import ru.androidlab.todoproj.adapters.Adapter
-import ru.androidlab.todoproj.data.Task
+import ru.androidlab.todoproj.data.TaskEntity
 import ru.androidlab.todoproj.databinding.FragmentTasksBinding
 import ru.androidlab.todoproj.util.MockUtil
+import ru.androidlab.todoproj.viewmodels.TaskViewModel
 
 class TasksFragment : Fragment(), Adapter.IMovieClick {
 
     private var removedPosition: Int = 0
     private var removedItem: String = ""
-    private var removedTask: Task.AlarmTask = Task.AlarmTask(0, "", "", "")
+    private var removedTaskEntity: TaskEntity = TaskEntity(0, "", "", "")
     private val adapter = Adapter(this)
     private var _binding: FragmentTasksBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: TaskViewModel by viewModels(
+        ownerProducer = ::requireParentFragment
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,16 +45,14 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerView.adapter = adapter
-        adapter.submitList(MockUtil.geList())
-
+        viewModel.data.observe(viewLifecycleOwner, {posts ->
+            adapter.submitList(posts)
+        })
         showAndHideFloatingActionButton()
+
         binding.floatingActionButton.setOnClickListener {
-            val list = adapter.currentList.toMutableList().also {
-                it.add(
-                    Task.AlarmTask((adapter.currentList.size+1).toLong(),"Shopp", "till 5:00 pm", "low")
-                )
-            }
-            adapter.submitList(list)
+            val intent = Intent(context, TaskSetupActivity::class.java)
+            startActivity(intent)
         }
 
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
@@ -70,11 +77,11 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
                         val list = adapter.currentList.toMutableList().also {
                             it.add(
                                 removedPosition,
-                                Task.AlarmTask(
-                                    removedTask.id,
+                                TaskEntity(
+                                    removedTaskEntity.id,
                                     removedItem,
-                                    removedTask.description,
-                                    removedTask.priority
+                                    removedTaskEntity.description,
+                                    removedTaskEntity.priority
                                 )
                             )
                         }
@@ -88,10 +95,10 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
 
     private fun writeRemoveTask(viewHolder: RecyclerView.ViewHolder) {
         removedPosition = viewHolder.adapterPosition
-        removedTask.id = (adapter.currentList[viewHolder.adapterPosition] as Task.AlarmTask).id
-        removedItem = (adapter.currentList[viewHolder.adapterPosition] as Task.AlarmTask).title
-        removedTask.description = (adapter.currentList[viewHolder.adapterPosition] as Task.AlarmTask).description
-        removedTask.priority = (adapter.currentList[viewHolder.adapterPosition] as Task.AlarmTask).priority
+        removedTaskEntity.id = (adapter.currentList[viewHolder.adapterPosition] as TaskEntity).id
+        removedItem = (adapter.currentList[viewHolder.adapterPosition] as TaskEntity).title
+        removedTaskEntity.description = (adapter.currentList[viewHolder.adapterPosition] as TaskEntity).description
+        removedTaskEntity.priority = (adapter.currentList[viewHolder.adapterPosition] as TaskEntity).priority
     }
 
     private fun removeItem(viewHolder: RecyclerView.ViewHolder) {
@@ -119,7 +126,7 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
         _binding = null
     }
 
-    override fun showToast(position: Task) {
+    override fun showToast(position: TaskEntity) {
         Toast.makeText(activity, "it's $position", Toast.LENGTH_LONG).show()
     }
 }
