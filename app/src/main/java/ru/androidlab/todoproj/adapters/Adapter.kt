@@ -36,7 +36,6 @@ class Adapter(private val listener: IMovieClick) :
             binding.apply {
                 textTitle.text = item.title
                 description.text = item.description
-                priority.text = item.priority
                 root.setOnClickListener { listener.showToast(item) }
             }
         }
