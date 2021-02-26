@@ -1,5 +1,9 @@
 package ru.androidlab.todoproj.data
 
 sealed class Task{
-    data class AlarmTask(val textTitle: String, val textTime: String, val alarmClockImage: Int, val time: String): Task()
+    data class AlarmTask(
+        var id: Long,
+        var title: String,
+        var description: String,
+        var priority: String): Task()
 }

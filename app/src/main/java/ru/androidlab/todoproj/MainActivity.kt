@@ -25,13 +25,7 @@ class MainActivity : AppCompatActivity() {
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
             override fun onTabSelected(tab: TabLayout.Tab) {
-                if (tab.position == 0) {
-                    //Todo something
-                } else if (tab.position == 1) {
-                    //Todo something
-                }  else {
-                    //Todo something
-                }
+                //do nothing here
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
