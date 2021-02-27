@@ -8,7 +8,7 @@ import ru.androidlab.todoproj.data.TaskEntity
 class TaskRepository (private val dao: TaskDao) : ITaskRepository{
     override fun getAll(): LiveData<List<TaskEntity>> = Transformations.map(dao.getAll()) { list ->
         list.map {
-            TaskEntity(it.id, it.title, it.description, it.priority)
+            TaskEntity(it.id, it.title, it.description, it.priority, it.done)
         }
     }
 

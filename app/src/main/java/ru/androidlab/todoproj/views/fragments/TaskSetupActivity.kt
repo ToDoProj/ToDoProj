@@ -16,7 +16,10 @@ class TaskSetupActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnSave.setOnClickListener {
-            taskViewModel.changeContent(binding.editTextTitle.text.toString())
+            taskViewModel.changeContent(
+                    binding.editTextTitle.text.toString(),
+                    binding.spinner.selectedItem.toString()
+            )
             taskViewModel.save()
 
             finish()

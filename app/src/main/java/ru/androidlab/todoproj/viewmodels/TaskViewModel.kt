@@ -13,7 +13,8 @@ private val empty = TaskEntity(
     id = 0,
     title = "",
     description = "",
-    priority = "Low"
+    priority = "Low",
+    done = false
 )
 
 class TaskViewModel (application: Application): AndroidViewModel(application){
@@ -35,12 +36,20 @@ class TaskViewModel (application: Application): AndroidViewModel(application){
         edit.value = task
     }
 
-    fun changeContent(content: String) {
-        val text = content.trim()
+    // Можно попробовать вот эту функцию для изменение на выполнено в БД
+    fun markDone(done: Boolean){
+        val status = true
+        edit.value = edit.value?.copy(done = status)
+    }
+
+    fun changeContent(title: String, priority: String) {
+        val text = title.trim()
+        val spinner = priority.trim()
         if (edit.value?.title == text) {
             return
         }
         edit.value = edit.value?.copy(title = text)
+        edit.value = edit.value?.copy(priority = spinner)
     }
 
     fun removeById(id: Long) = repository.removeById(id)

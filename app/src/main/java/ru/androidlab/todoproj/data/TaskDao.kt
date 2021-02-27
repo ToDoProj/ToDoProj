@@ -13,13 +13,12 @@ interface TaskDao {
     @Insert
     fun insert(task: TaskEntity)
 
-    @Query("UPDATE TaskEntity SET title = :title AND priority = :priority  WHERE id = :id")
-    fun updateContentById(id: Long, title: String, priority: String)
+    @Query("UPDATE TaskEntity SET title = :title AND priority = :priority AND done = :done WHERE id = :id")
+    fun updateContentById(id: Long, title: String, priority: String, done: Boolean)
 
     fun save(task: TaskEntity) =
-        if (task.id == 0L) insert(task) else updateContentById(task.id, task.title, task.priority)
+        if (task.id == 0L) insert(task) else updateContentById(task.id, task.title, task.priority, task.done)
 
     @Query("DELETE FROM TaskEntity WHERE id = :id")
     fun removeById(id: Long)
-
 }

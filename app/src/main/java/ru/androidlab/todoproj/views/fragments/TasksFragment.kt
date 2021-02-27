@@ -28,9 +28,7 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
     private var _binding: FragmentTasksBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: TaskViewModel by viewModels(
-        ownerProducer = ::requireParentFragment
-    )
+    private val viewModel: TaskViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -89,7 +87,6 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
                     }.show()
             }
         }
-
         ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding.recyclerView)
     }
 
@@ -106,6 +103,7 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
             .also { it.removeAt(viewHolder.adapterPosition) }
         adapter.submitList(list)
         writeRemoveTask(viewHolder)
+
     }
 
     private fun showAndHideFloatingActionButton() {
@@ -127,6 +125,8 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
     }
 
     override fun showToast(position: TaskEntity) {
+        val intent = Intent(context, TaskSetupActivity::class.java)
+        startActivity(intent)
         Toast.makeText(activity, "it's $position", Toast.LENGTH_LONG).show()
     }
 }
