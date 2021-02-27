@@ -23,7 +23,7 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
 
     private var removedPosition: Int = 0
     private var removedItem: String = ""
-    private var removedTaskEntity: TaskEntity = TaskEntity(0, "", "", "")
+    private var removedTaskEntity: TaskEntity = TaskEntity(0, "", "", "", false)
     private val adapter = Adapter(this)
     private var _binding: FragmentTasksBinding? = null
     private val binding get() = _binding!!
@@ -79,7 +79,8 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
                                     removedTaskEntity.id,
                                     removedItem,
                                     removedTaskEntity.description,
-                                    removedTaskEntity.priority
+                                    removedTaskEntity.priority,
+                                    removedTaskEntity.done
                                 )
                             )
                         }
