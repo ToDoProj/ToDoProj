@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import ru.androidlab.todoproj.data.Task
+import ru.androidlab.todoproj.data.TaskEntity
 import ru.androidlab.todoproj.databinding.ItemHolderBinding
 
 class Adapter(private val listener: IMovieClick) :
-    ListAdapter<Task, BaseViewHolder>(MoviesDiffCallback) {
+    ListAdapter<TaskEntity, BaseViewHolder>(MoviesDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return Holder(parent)
@@ -31,31 +31,30 @@ class Adapter(private val listener: IMovieClick) :
             )
         )
 
-        override fun bind(item: Task) {
-            item as Task.AlarmTask
+        override fun bind(item: TaskEntity) {
             binding.apply {
                 textTitle.text = item.title
                 description.text = item.description
-                root.setOnClickListener { listener.showToast(item) }
+                root.setOnClickListener { listener.openTask(item) }
             }
         }
     }
 
     interface IMovieClick {
-        fun showToast(position: Task)
+        fun openTask(position: TaskEntity)
     }
 
-    object MoviesDiffCallback : DiffUtil.ItemCallback<Task>() {
-        override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
+    object MoviesDiffCallback : DiffUtil.ItemCallback<TaskEntity>() {
+        override fun areItemsTheSame(oldItem: TaskEntity, newItem: TaskEntity): Boolean {
             return when {
-                oldItem is Task.AlarmTask && newItem is Task.AlarmTask -> {
+                oldItem is TaskEntity && newItem is TaskEntity -> {
                     oldItem.title == newItem.title
                 }
                 else -> true
             }
         }
 
-        override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
+        override fun areContentsTheSame(oldItem: TaskEntity, newItem: TaskEntity): Boolean {
             return areItemsTheSame(oldItem, newItem)
         }
     }
