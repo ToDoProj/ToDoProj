@@ -124,7 +124,7 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
         _binding = null
     }
 
-    override fun showToast(position: TaskEntity) {
+    override fun openTask(position: TaskEntity) {
 
         val intent = Intent(context, TaskSetupActivity::class.java).apply {
             putExtra(MockUtil.GET_TASK_ENTITY, position)

@@ -35,13 +35,13 @@ class Adapter(private val listener: IMovieClick) :
             binding.apply {
                 textTitle.text = item.title
                 description.text = item.description
-                root.setOnClickListener { listener.showToast(item) }
+                root.setOnClickListener { listener.openTask(item) }
             }
         }
     }
 
     interface IMovieClick {
-        fun showToast(position: TaskEntity)
+        fun openTask(position: TaskEntity)
     }
 
     object MoviesDiffCallback : DiffUtil.ItemCallback<TaskEntity>() {
