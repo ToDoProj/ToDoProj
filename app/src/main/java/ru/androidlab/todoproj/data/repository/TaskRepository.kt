@@ -20,4 +20,12 @@ class TaskRepository (private val dao: TaskDao) : ITaskRepository{
         dao.removeById(id)
     }
 
+    override fun updateContentById(id: Long, title: String, description: String, priority: String, done: Boolean) {
+        dao.updateContentById(id, title, description, priority, done)
+    }
+
+    override fun update(task: TaskEntity) {
+        dao.update(TaskEntity.fromDto(task))
+    }
+
 }

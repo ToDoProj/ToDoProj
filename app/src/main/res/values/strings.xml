@@ -7,6 +7,9 @@
     <string name="title">Введите заголовок</string>
     <string name="description">Введите описание</string>
     <string name="priority">Приоритет задачи</string>
+    <string name="btn_save">Save</string>
+    <string name="settings">SETTINGS</string>
+    <string name="account">ACCOUNT</string>
 
     <string-array name="taskStatus">
         <item>Low</item>

@@ -9,13 +9,7 @@ import ru.androidlab.todoproj.data.TaskEntity
 import ru.androidlab.todoproj.data.repository.ITaskRepository
 import ru.androidlab.todoproj.data.repository.TaskRepository
 
-private val empty = TaskEntity(
-    id = 0,
-    title = "",
-    description = "",
-    priority = "Low",
-    done = false
-)
+private val empty = TaskEntity()
 
 class TaskViewModel (application: Application): AndroidViewModel(application){
     private val repository: ITaskRepository = TaskRepository(
@@ -30,10 +24,6 @@ class TaskViewModel (application: Application): AndroidViewModel(application){
             repository.save(it)
         }
         edit.value = empty
-    }
-
-    fun edit(task: TaskEntity) {
-        edit.value = task
     }
 
     // Можно попробовать вот эту функцию для изменение на выполнено в БД
@@ -53,4 +43,8 @@ class TaskViewModel (application: Application): AndroidViewModel(application){
     }
 
     fun removeById(id: Long) = repository.removeById(id)
+
+    fun update(task: TaskEntity){
+        repository.update(task)
+    }
 }

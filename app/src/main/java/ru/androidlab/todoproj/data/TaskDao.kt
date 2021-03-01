@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface TaskDao {
@@ -13,12 +14,29 @@ interface TaskDao {
     @Insert
     fun insert(task: TaskEntity)
 
-    @Query("UPDATE TaskEntity SET title = :title AND priority = :priority AND done = :done WHERE id = :id")
-    fun updateContentById(id: Long, title: String, priority: String, done: Boolean)
+    @Query("UPDATE TaskEntity SET title = :title AND priority = :priority AND done = :done AND description = :description WHERE id = :id")
+    fun updateContentById(
+            id: Long,
+            title: String,
+            description: String,
+            priority: String,
+            done: Boolean
+    )
 
     fun save(task: TaskEntity) =
-        if (task.id == 0L) insert(task) else updateContentById(task.id, task.title, task.priority, task.done)
+        task.id?.let {id ->
+            updateContentById(
+                    id,
+                    task.title,
+                    task.description,
+                    task.priority,
+                    task.done
+            )
+        } ?: insert(task)
 
     @Query("DELETE FROM TaskEntity WHERE id = :id")
     fun removeById(id: Long)
+
+    @Update
+    fun update(task: TaskEntity)
 }
