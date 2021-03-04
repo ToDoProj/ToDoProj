@@ -15,15 +15,18 @@ class TaskViewModel (application: Application): AndroidViewModel(application){
     private val repository: ITaskRepository = TaskRepository(
         AppDataBase.getInstance(context = application).taskDao()
     )
-    val data =repository.getAll()
+    var data = repository.getAllActualTask()
     val edit = MutableLiveData(empty)
-
 
     fun save() {
         edit.value?.let {
             repository.save(it)
         }
         edit.value = empty
+    }
+
+    fun saveTask(task: TaskEntity){
+        repository.save(task)
     }
 
     // Можно попробовать вот эту функцию для изменение на выполнено в БД
@@ -46,5 +49,30 @@ class TaskViewModel (application: Application): AndroidViewModel(application){
 
     fun update(task: TaskEntity){
         repository.update(task)
+    }
+
+    fun filterByLowPriority(){
+        data = repository.filterByLowPriority()
+    }
+
+    fun filterByMediumPriority(){
+        data = repository.filterByMediumPriority()
+    }
+
+    fun filterByHighPriority(){
+        data = repository.filterByHighPriority()
+    }
+
+    fun getAllDone(){
+        data = repository.getAllDone()
+    }
+
+    fun getAllActualTask(){
+        data = repository.getAllActualTask()
+    }
+
+    fun updateDone(task: TaskEntity){
+        task.done = true
+        repository.updateDone(task)
     }
 }

@@ -14,12 +14,12 @@
         android:layout_height="match_parent">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="30dp"
+            android:id="@+id/color_image"
+            android:layout_width="25dp"
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/custom_red"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textTitle"
@@ -32,7 +32,7 @@
             android:fontFamily="@font/roboto_medium"
             android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@id/description"
-            app:layout_constraintEnd_toStartOf="@id/alarm_clock"
+            app:layout_constraintEnd_toStartOf="@id/done"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Title" />
@@ -46,38 +46,24 @@
             android:textSize="20sp"
             android:fontFamily="@font/roboto_regular"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/time"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textTitle"
+            app:layout_constraintEnd_toStartOf="@id/done"
             tools:text="time" />
 
-        <ImageView
-            android:id="@+id/alarm_clock"
+        <ImageButton
+            android:id="@+id/done"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:layout_marginEnd="24dp"
-            android:src="@drawable/alarm_clock"
-            app:layout_constraintBottom_toTopOf="@id/time"
+            android:src="@drawable/unchecked"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/textTitle"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="16dp"
-            android:text="4:20"
-            android:textColor="@color/custom_red"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/alarm_clock"
-            app:layout_constraintTop_toBottomOf="@id/alarm_clock" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

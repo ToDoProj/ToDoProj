@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 @Entity
-data class TaskEntity (
+data class TaskEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null,
     var title: String = "",
