@@ -25,8 +25,8 @@ class TaskViewModel (application: Application): AndroidViewModel(application){
         edit.value = empty
     }
 
-    fun saveTask(task: TaskEntity){
-        repository.save(task)
+    fun saveRemovedTask(task: TaskEntity){
+        repository.saveRemovedTask(task)
     }
 
     // Можно попробовать вот эту функцию для изменение на выполнено в БД

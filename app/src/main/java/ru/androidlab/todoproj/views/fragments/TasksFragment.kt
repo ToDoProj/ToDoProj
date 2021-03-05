@@ -23,7 +23,6 @@ import ru.androidlab.todoproj.views.activity.TaskSetupActivity
 class TasksFragment : Fragment(), Adapter.IMovieClick {
 
     private var removedPosition: Int = 0
-    private var removedItem: String = ""
     private var removedTaskEntity: TaskEntity = TaskEntity(0, "", "", "", false)
     private val adapter = Adapter(this)
     private var _binding: FragmentTasksBinding? = null
@@ -74,7 +73,7 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
                 )
                     .setDuration(5000)
                     .setAction("UNDO") {
-                        viewModel.saveTask(removedTaskEntity)
+                        viewModel.saveRemovedTask(removedTaskEntity)
                     }.show()
             }
         }
@@ -157,7 +156,7 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
     private fun saveTaskBackUp(position: Int) {
         removedPosition = position
         removedTaskEntity.id = (adapter.currentList[position] as TaskEntity).id
-        removedItem = (adapter.currentList[position] as TaskEntity).title
+        removedTaskEntity.title = (adapter.currentList[position] as TaskEntity).title
         removedTaskEntity.description = (adapter.currentList[position] as TaskEntity).description
         removedTaskEntity.priority = (adapter.currentList[position] as TaskEntity).priority
         removedTaskEntity.done = (adapter.currentList[position] as TaskEntity).done
