@@ -8,8 +8,20 @@ import androidx.room.Update
 
 @Dao
 interface TaskDao {
-    @Query("SELECT * FROM TaskEntity ORDER BY id DESC")
-    fun getAll(): LiveData<List<TaskEntity>>
+    @Query("SELECT * FROM TaskEntity WHERE done = :done ORDER BY id DESC")
+    fun  getAllActualTask(done: Boolean): LiveData<List<TaskEntity>>
+
+    @Query("SELECT * FROM TaskEntity WHERE done = :done ")
+    fun getAllDone(done: Boolean): LiveData<List<TaskEntity>>
+
+    @Query("SELECT * FROM TaskEntity WHERE priority='Low' AND done = :done ")
+    fun getAllLowPriority(done: Boolean): LiveData<List<TaskEntity>>
+
+    @Query("SELECT * FROM TaskEntity WHERE priority='Medium' AND done = :done ")
+    fun getAllMediumPriority(done: Boolean): LiveData<List<TaskEntity>>
+
+    @Query("SELECT * FROM TaskEntity WHERE priority='High' AND done = :done")
+    fun getAllHighPriority(done: Boolean): LiveData<List<TaskEntity>>
 
     @Insert
     fun insert(task: TaskEntity)
@@ -39,4 +51,5 @@ interface TaskDao {
 
     @Update
     fun update(task: TaskEntity)
+
 }
