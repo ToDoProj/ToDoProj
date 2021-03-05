@@ -5,36 +5,49 @@ import androidx.lifecycle.Transformations
 import ru.androidlab.todoproj.data.TaskDao
 import ru.androidlab.todoproj.data.TaskEntity
 
-class TaskRepository (private val dao: TaskDao) : ITaskRepository{
-    override fun getAllActualTask(): LiveData<List<TaskEntity>> = Transformations.map(dao. getAllActualTask(false)) { list ->
-        list.map {
-            TaskEntity(it.id, it.title, it.description, it.priority, it.done)
-        }
+class TaskRepository(private val dao: TaskDao) : ITaskRepository {
+    override fun getAll(): List<TaskEntity> {
+        return dao.getAll()
     }
 
-    override fun getAllDone(): LiveData<List<TaskEntity>> = Transformations.map(dao.getAllDone(true)) { list ->
-        list.map {
-            TaskEntity(it.id, it.title, it.description, it.priority, it.done)
-        }
+    override fun getById(id: Long): TaskEntity {
+        return dao.getById(id)
     }
 
-    override fun filterByLowPriority(): LiveData<List<TaskEntity>> = Transformations.map(dao.getAllLowPriority(false)) { list ->
-        list.map {
-            TaskEntity(it.id, it.title, it.description, it.priority, it.done)
+    override fun getAllActualTask(): LiveData<List<TaskEntity>> =
+        Transformations.map(dao.getAllActualTask(false)) { list ->
+            list.map {
+                TaskEntity(it.id, it.title, it.description, it.priority, it.done)
+            }
         }
-    }
 
-    override fun filterByMediumPriority(): LiveData<List<TaskEntity>> = Transformations.map(dao.getAllMediumPriority(false)) { list ->
-        list.map {
-            TaskEntity(it.id, it.title, it.description, it.priority, it.done)
+    override fun getAllDone(): LiveData<List<TaskEntity>> =
+        Transformations.map(dao.getAllDone(true)) { list ->
+            list.map {
+                TaskEntity(it.id, it.title, it.description, it.priority, it.done)
+            }
         }
-    }
 
-    override fun filterByHighPriority(): LiveData<List<TaskEntity>> = Transformations.map(dao.getAllHighPriority(false)) { list ->
-        list.map {
-            TaskEntity(it.id, it.title, it.description, it.priority, it.done)
+    override fun filterByLowPriority(): LiveData<List<TaskEntity>> =
+        Transformations.map(dao.getAllLowPriority(false)) { list ->
+            list.map {
+                TaskEntity(it.id, it.title, it.description, it.priority, it.done)
+            }
         }
-    }
+
+    override fun filterByMediumPriority(): LiveData<List<TaskEntity>> =
+        Transformations.map(dao.getAllMediumPriority(false)) { list ->
+            list.map {
+                TaskEntity(it.id, it.title, it.description, it.priority, it.done)
+            }
+        }
+
+    override fun filterByHighPriority(): LiveData<List<TaskEntity>> =
+        Transformations.map(dao.getAllHighPriority(false)) { list ->
+            list.map {
+                TaskEntity(it.id, it.title, it.description, it.priority, it.done)
+            }
+        }
 
     override fun save(task: TaskEntity) {
         dao.save(TaskEntity.fromDto(task))
@@ -44,7 +57,13 @@ class TaskRepository (private val dao: TaskDao) : ITaskRepository{
         dao.removeById(id)
     }
 
-    override fun updateContentById(id: Long, title: String, description: String, priority: String, done: Boolean) {
+    override fun updateContentById(
+        id: Long,
+        title: String,
+        description: String,
+        priority: String,
+        done: Boolean
+    ) {
         dao.updateContentById(id, title, description, priority, done)
     }
 

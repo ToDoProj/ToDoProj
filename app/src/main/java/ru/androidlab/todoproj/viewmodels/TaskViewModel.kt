@@ -51,6 +51,10 @@ class TaskViewModel (application: Application): AndroidViewModel(application){
         repository.update(task)
     }
 
+    fun getAll():List<TaskEntity>{
+        return repository.getAll()
+    }
+
     fun filterByLowPriority(){
         data = repository.filterByLowPriority()
     }
@@ -74,5 +78,9 @@ class TaskViewModel (application: Application): AndroidViewModel(application){
     fun updateDone(task: TaskEntity){
         task.done = true
         repository.updateDone(task)
+    }
+
+    fun getById(id: Long):TaskEntity{
+        return repository.getById(id)
     }
 }
