@@ -12,6 +12,7 @@ interface ITaskRepository {
     fun filterByMediumPriority(): LiveData<List<TaskEntity>>
     fun filterByHighPriority(): LiveData<List<TaskEntity>>
     fun save(task: TaskEntity)
+    fun saveRemovedTask(task: TaskEntity)
     fun removeById(id: Long)
     fun updateContentById(id: Long, title: String, description: String, priority: String, done: Boolean)
     fun update(task: TaskEntity)

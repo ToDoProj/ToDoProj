@@ -53,6 +53,10 @@ class TaskRepository(private val dao: TaskDao) : ITaskRepository {
         dao.save(TaskEntity.fromDto(task))
     }
 
+    override fun saveRemovedTask(task: TaskEntity) {
+        dao.insert(task)
+    }
+
     override fun removeById(id: Long) {
         dao.removeById(id)
     }

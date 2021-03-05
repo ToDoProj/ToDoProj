@@ -24,7 +24,6 @@ import java.util.*
 class TasksFragment : Fragment(), Adapter.ClickableTask {
 
     private var removedPosition: Int = 0
-    private var removedItem: String = ""
     private var removedTaskEntity: TaskEntity = TaskEntity(0, "", "", "", false)
     private val adapter = Adapter(this)
     private lateinit var binding: FragmentTasksBinding
@@ -74,7 +73,7 @@ class TasksFragment : Fragment(), Adapter.ClickableTask {
                 )
                     .setDuration(5000)
                     .setAction("UNDO") {
-                        viewModel.saveTask(removedTaskEntity)
+                        viewModel.saveRemovedTask(removedTaskEntity)
                     }.show()
             }
         }
@@ -189,7 +188,7 @@ class TasksFragment : Fragment(), Adapter.ClickableTask {
     private fun saveTaskBackUp(position: Int) {
         removedPosition = position
         removedTaskEntity.id = (adapter.currentList[position] as TaskEntity).id
-        removedItem = (adapter.currentList[position] as TaskEntity).title
+        removedTaskEntity.title = (adapter.currentList[position] as TaskEntity).title
         removedTaskEntity.description = (adapter.currentList[position] as TaskEntity).description
         removedTaskEntity.priority = (adapter.currentList[position] as TaskEntity).priority
         removedTaskEntity.done = (adapter.currentList[position] as TaskEntity).done
