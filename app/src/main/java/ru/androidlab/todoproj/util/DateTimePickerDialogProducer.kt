@@ -24,8 +24,10 @@ class DateTimePickerDialogProducer(
                         newDate.set(year, month, dayOfMonth, hour, minute, 0)
                         val currentCalendar = Calendar.getInstance()
                         if (newDate.timeInMillis - currentCalendar.timeInMillis > 0) {
-                            listener.timePicked(newDate.time)
-                            listener.datePicked(Date(year, month, dayOfMonth))
+                            //listener.timePicked(newDate.time)
+                            //listener.datePicked(Date(year, month, dayOfMonth))
+                            listener.dateTimePicked(Date(year,month,dayOfMonth,newDate.time.hours,newDate.time.minutes))
+                            newDate.time = newTime.time
                         } else {
                             Toast.makeText(context, "Invalid date time", Toast.LENGTH_SHORT)
                                 .show()
@@ -35,6 +37,7 @@ class DateTimePickerDialogProducer(
                     newTime.get(Calendar.MINUTE),
                     true
                 )
+
                 timePickerDialog.show()
             },
             calendar.get(Calendar.YEAR),

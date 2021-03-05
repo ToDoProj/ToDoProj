@@ -2,7 +2,7 @@
     <string name="app_name">ToDoProj</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="save">Create</string>
+    <string name="save">Create Task</string>
     <string name="title">Введите заголовок</string>
     <string name="description">Введите описание</string>
     <string name="priority">Приоритет задачи</string>
@@ -15,6 +15,7 @@
     <string name="show_completed_tasks">SHOW COMPLETED TASKS</string>
     <string name="show_actual_task">SHOW ACTUAL TASKS</string>
     <string name="priority_menu_item">PIORITY FILTER</string>
+    <string name="add_reminder">ADD REMINDER</string>
 
     <string-array name="taskStatus">
         <item>Low</item>

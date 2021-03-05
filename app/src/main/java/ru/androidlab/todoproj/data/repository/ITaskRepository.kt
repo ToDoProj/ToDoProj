@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import ru.androidlab.todoproj.data.TaskEntity
 
 interface ITaskRepository {
+    fun getAll():List<TaskEntity>
+    fun getById(id:Long):TaskEntity
     fun getAllActualTask(): LiveData<List<TaskEntity>>
     fun getAllDone(): LiveData<List<TaskEntity>>
     fun filterByLowPriority(): LiveData<List<TaskEntity>>
