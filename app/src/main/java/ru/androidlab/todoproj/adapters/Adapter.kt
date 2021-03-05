@@ -10,7 +10,7 @@ import ru.androidlab.todoproj.R
 import ru.androidlab.todoproj.data.TaskEntity
 import ru.androidlab.todoproj.databinding.ItemHolderBinding
 
-class Adapter(private val listener: IMovieClick) :
+class Adapter(private val listener: ClickableTask) :
     ListAdapter<TaskEntity, BaseViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -63,11 +63,6 @@ class Adapter(private val listener: IMovieClick) :
         }
     }
 
-    interface IMovieClick {
-        fun openTask(task: TaskEntity)
-        fun complete(task: TaskEntity)
-    }
-
     object DiffCallback : DiffUtil.ItemCallback<TaskEntity>() {
         override fun areItemsTheSame(oldItem: TaskEntity, newItem: TaskEntity): Boolean {
             return when {
@@ -81,5 +76,10 @@ class Adapter(private val listener: IMovieClick) :
         override fun areContentsTheSame(oldItem: TaskEntity, newItem: TaskEntity): Boolean {
             return areItemsTheSame(oldItem, newItem)
         }
+    }
+
+    interface ClickableTask {
+        fun openTask(task: TaskEntity)
+        fun complete(task: TaskEntity)
     }
 }

@@ -1,18 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+
+<item
+    android:title="@string/priority_menu_item"
+    android:id="@+id/priority_menu_group"
+    app:showAsAction="ifRoom|withText">
+    <menu>
         <item
             android:id="@+id/low_priority"
-            android:title="Low priority"/>
+            android:title="@string/low_priority" />
         <item
             android:id="@+id/medium_priority"
-            android:title="Medium_priority"/>
+            android:title="@string/medium_priority" />
         <item
             android:id="@+id/high_priority"
-            android:title="High priority"/>
+            android:title="@string/high_priority" />
+    </menu>
+
+</item>
+    <group android:id="@+id/completed">
         <item
             android:id="@+id/show_done"
-            android:title="Show done"/>
+            android:title="@string/show_completed_tasks" />
+    </group>
+
+    <group android:id="@+id/all">
         <item
             android:id="@+id/show_all"
-            android:title="Show actual task"/>
+            android:title="@string/show_actual_task" />
+    </group>
 </menu>
