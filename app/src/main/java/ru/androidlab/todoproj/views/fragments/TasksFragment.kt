@@ -2,13 +2,13 @@ package ru.androidlab.todoproj.views.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -19,15 +19,15 @@ import ru.androidlab.todoproj.databinding.FragmentTasksBinding
 import ru.androidlab.todoproj.util.MockUtil
 import ru.androidlab.todoproj.viewmodels.TaskViewModel
 import ru.androidlab.todoproj.views.activity.TaskSetupActivity
+import java.util.*
 
-class TasksFragment : Fragment(), Adapter.IMovieClick {
+class TasksFragment : Fragment(), Adapter.ClickableTask {
 
     private var removedPosition: Int = 0
     private var removedItem: String = ""
     private var removedTaskEntity: TaskEntity = TaskEntity(0, "", "", "", false)
     private val adapter = Adapter(this)
-    private var _binding: FragmentTasksBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentTasksBinding
 
     private val viewModel: TaskViewModel by viewModels()
 
@@ -36,7 +36,7 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentTasksBinding.inflate(inflater, container, false)
+        binding = FragmentTasksBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -81,6 +81,38 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
         ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(binding.recyclerView)
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        var menuItem = menu.findItem(R.id.low_priority)
+        var spanString = SpannableString(menuItem.title.toString())
+        spanString.setSpan(
+            ForegroundColorSpan(resources.getColor(R.color.custom_green)),
+            0,
+            spanString.length,
+            0
+        )
+        menuItem.title = spanString
+
+        menuItem = menu.findItem(R.id.medium_priority)
+        spanString = SpannableString(menuItem.title.toString())
+        spanString.setSpan(
+            ForegroundColorSpan(resources.getColor(R.color.custom_yellow)),
+            0,
+            spanString.length,
+            0
+        )
+        menuItem.title = spanString
+
+        menuItem = menu.findItem(R.id.high_priority)
+        spanString = SpannableString(menuItem.title.toString())
+        spanString.setSpan(
+            ForegroundColorSpan(resources.getColor(R.color.custom_red)),
+            0,
+            spanString.length,
+            0
+        )
+        menuItem.title = spanString
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return when (item.itemId) {
@@ -109,9 +141,9 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
     }
 
     private fun setObserver() {
-        viewModel.data.observe(viewLifecycleOwner, { posts ->
+        viewModel.data.observe(viewLifecycleOwner) { posts ->
             adapter.submitList(posts)
-        })
+        }
     }
 
     private fun filterByLowPriority() {
@@ -181,19 +213,11 @@ class TasksFragment : Fragment(), Adapter.IMovieClick {
         })
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     override fun openTask(task: TaskEntity) {
-
         val intent = Intent(context, TaskSetupActivity::class.java).apply {
             putExtra(MockUtil.GET_TASK_ENTITY, task)
         }
         startActivity(intent)
-
-        Toast.makeText(activity, "it's $task", Toast.LENGTH_LONG).show()
     }
 
     override fun complete(task: TaskEntity) {
