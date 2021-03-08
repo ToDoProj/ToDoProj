@@ -34,6 +34,7 @@ class TaskSetupActivity : AppCompatActivity(), ITaskSetupView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding = TaskSetupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -55,33 +56,32 @@ class TaskSetupActivity : AppCompatActivity(), ITaskSetupView {
 
 
         binding.btnSave.setOnClickListener {
-            if (isEditState) {
-                //Изменение приоритета работает только при изменении текста
-                task.priority = binding.spinner.selectedItem.toString()
-                task.apply { taskViewModel.update(this) }
+            if (binding.editTextTitle.text?.toString() == "") {
+                Toast.makeText(this, "add a title", Toast.LENGTH_SHORT).show()
             } else {
-                taskViewModel.changeContent(
-                    binding.editTextTitle.text?.toString() ?: "",
-                    binding.spinner.selectedItem?.toString() ?: ""
-                )
-                taskViewModel.save()
-                if (remindDate != null) {
-                    val tasks = taskViewModel.getAll()
-                    val newTask = tasks.get(tasks.size-1)
-                    newTask.description="10"
-                    presenter.createAlarm(remindDate!!,newTask, this)
+                if (isEditState) {
+                    //Изменение приоритета работает только при изменении текста
+                    task.priority = binding.spinner.selectedItem.toString()
+                    task.apply { taskViewModel.update(this) }
+                } else {
+                    taskViewModel.changeContent(
+                        binding.editTextTitle.text?.toString() ?: "",
+                        binding.spinner.selectedItem?.toString() ?: ""
+                    )
+                    taskViewModel.save()
+                    if (remindDate != null) {
+                        val tasks = taskViewModel.getAll()
+                        val newTask = tasks.get(tasks.size - 1)
+                        newTask.description = "10"
+                        presenter.createAlarm(remindDate!!, newTask, this)
+                    }
                 }
+                finish()
             }
-
-            finish()
         }
 
         binding.editTextTitle.addTextChangedListener { editable ->
             editable?.let { task.title = it.toString() }
-        }
-
-        binding.btnClose.setOnClickListener {
-            finish()
         }
 
         val dialogProducer =
@@ -102,6 +102,7 @@ class TaskSetupActivity : AppCompatActivity(), ITaskSetupView {
 
         setupSpinner()
     }
+
 
     fun setupSpinner() {
         val spinnerItems = mutableListOf<SpannableString>()

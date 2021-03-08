@@ -17,6 +17,12 @@
     <string name="priority_menu_item">PIORITY FILTER</string>
     <string name="add_reminder">ADD REMINDER</string>
 
+    <string name="example">Example</string>
+    <string name="id">ID</string>
+    <string name="name">Name</string>
+    <string name="email_address">Email address</string>
+    <string name="sign_out">Sign out</string>
+
     <string-array name="taskStatus">
         <item>Low</item>
         <item>Medium</item>

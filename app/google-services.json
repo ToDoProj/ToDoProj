@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "534486285892",
+    "project_id": "todoproj-a891a",
+    "storage_bucket": "todoproj-a891a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534486285892:android:ff6abd7ae37b2d254e0611",
+        "android_client_info": {
+          "package_name": "ru.androidlab.todoproj"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534486285892-nnk5hb3k30g3jifrq6tha3pkijv4afv7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.androidlab.todoproj",
+            "certificate_hash": "766b0413be88e8af97f1102043bbf8fe5ff93d7d"
+          }
+        },
+        {
+          "client_id": "534486285892-pgmk69sp8vc5l55ba4u61269po2n077p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5Fq5PdopOItShSb4cv0WbONTeaJnO4Do"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534486285892-pgmk69sp8vc5l55ba4u61269po2n077p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

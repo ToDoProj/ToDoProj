@@ -21,6 +21,13 @@
 
         <activity
             android:name=".views.activity.TaskSetupActivity"
+            android:parentActivityName=".MainActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".views.activity.ProfileActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>
