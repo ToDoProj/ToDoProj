@@ -8,13 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import ru.androidlab.todoproj.MainActivity
 import ru.androidlab.todoproj.R
 import ru.androidlab.todoproj.databinding.FragmentSettingsBinding
 import ru.androidlab.todoproj.views.activity.ProfileActivity
@@ -48,32 +48,32 @@ class SettingsFragment: Fragment() {
         mAuth = FirebaseAuth.getInstance()
         val user = mAuth.currentUser
 
-        binding.btnSignIn.setOnClickListener {
-            signIn()
+        binding.signOutBtn.setOnClickListener {
+            mAuth.signOut()
+            googleSignInClient.signOut()
+
+            val intent = Intent(context, ProfileActivity::class.java)
+            startActivity(intent)
         }
 
-        binding.btnProfile.setOnClickListener {
-            if(user != null){
-                val intentProfile = Intent(context, ProfileActivity::class.java)
-                startActivity(intentProfile)
-            }else{
-                signIn()
-            }
-        }
-
-
+        setProfileValue()
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    fun setProfileValue(){
+        val currentUser = mAuth.currentUser
 
+        binding.nameTxt.text = currentUser?.displayName
+        binding.emailTxt.text = currentUser?.email
+
+        Glide.with(this).load(currentUser?.photoUrl).into(binding.profileImage)
     }
 
-    private fun signIn() {
-        val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
+    override fun onResume() {
+        setProfileValue()
+        super.onResume()
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
