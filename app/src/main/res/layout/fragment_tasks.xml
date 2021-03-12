@@ -21,6 +21,7 @@
         android:layout_margin="16dp"
         android:contentDescription="floating"
         android:backgroundTint="@color/custom_orange"
-        app:srcCompat="@drawable/ic_plus_24"/>
+        app:srcCompat="@drawable/ic_plus_24"
+        android:tint="@color/white"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

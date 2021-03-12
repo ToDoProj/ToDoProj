@@ -22,6 +22,12 @@
     <string name="name">Name</string>
     <string name="email_address">Email address</string>
     <string name="sign_out">Sign out</string>
+    <string name="continue_without_signing">Continue without signing</string>
+    <string name="complete_task">Complete Task</string>
+    <string name="task_has_been_completed">Task Has Been Completed</string>
+    <string name="open_main_app">Task has been completed. Do you want to open main application?</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
 
     <string-array name="taskStatus">
         <item>Low</item>

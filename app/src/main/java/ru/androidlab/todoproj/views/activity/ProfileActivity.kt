@@ -5,16 +5,15 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
-import ru.androidlab.todoproj.R
-import ru.androidlab.todoproj.databinding.ProfileBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import ru.androidlab.todoproj.MainActivity
-import ru.androidlab.todoproj.views.fragments.SettingsFragment
+import ru.androidlab.todoproj.R
+import ru.androidlab.todoproj.databinding.ProfileBinding
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -37,17 +36,20 @@ class ProfileActivity : AppCompatActivity() {
 
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build()
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        //Firebase Auth instance
         mAuth = FirebaseAuth.getInstance()
         val user = mAuth.currentUser
 
         binding.btnSignIn.setOnClickListener {
             signIn()
+        }
+
+        binding.continueButton.setOnClickListener {
+            startMainActivity()
         }
     }
 
@@ -56,22 +58,25 @@ class ProfileActivity : AppCompatActivity() {
         startActivityForResult(signInIntent, MainActivity.RC_SIGN_IN)
     }
 
+    private fun startMainActivity() {
+        val mainIntent = Intent(this, MainActivity::class.java)
+        startActivity(mainIntent)
+        finish()
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == ProfileActivity.RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             val exception = task.exception
             if (task.isSuccessful) {
                 try {
-                    // Google Sign In was successful, authenticate with Firebase
                     val account = task.getResult(ApiException::class.java)!!
                     Log.d("SettingsFragment", "firebaseAuthWithGoogle:" + account.id)
                     firebaseAuthWithGoogle(account.idToken!!)
                 } catch (e: ApiException) {
-                    // Google Sign In failed, update UI appropriately
                     Log.w("SettingsFragment", "Google sign in failed", e)
                 }
             } else {
@@ -83,16 +88,14 @@ class ProfileActivity : AppCompatActivity() {
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener() { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d("SignInActivity", "signInWithCredential:success")
-                        Toast.makeText(this, "Enter success", Toast.LENGTH_SHORT).show()
-                        finish()
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.d("SignInActivity", "signInWithCredential:failure")
-                    }
+            .addOnCompleteListener() { task ->
+                if (task.isSuccessful) {
+                    Log.d("SignInActivity", "signInWithCredential:success")
+                    Toast.makeText(this, "Enter success", Toast.LENGTH_SHORT).show()
+                    startMainActivity()
+                } else {
+                    Log.d("SignInActivity", "signInWithCredential:failure")
                 }
+            }
     }
 }

@@ -16,13 +16,12 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import ru.androidlab.todoproj.R
-import ru.androidlab.todoproj.databinding.FragmentSettingsBinding
+import ru.androidlab.todoproj.databinding.FragmentProfileBinding
 import ru.androidlab.todoproj.views.activity.ProfileActivity
 
-class SettingsFragment: Fragment() {
+class ProfileFragment : Fragment() {
 
-    private var _binding: FragmentSettingsBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentProfileBinding
 
     companion object {
         private const val RC_SIGN_IN = 120
@@ -32,11 +31,11 @@ class SettingsFragment: Fragment() {
     private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ):View? {
-        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -60,7 +59,7 @@ class SettingsFragment: Fragment() {
         return binding.root
     }
 
-    fun setProfileValue(){
+    fun setProfileValue() {
         val currentUser = mAuth.currentUser
 
         binding.nameTxt.text = currentUser?.displayName

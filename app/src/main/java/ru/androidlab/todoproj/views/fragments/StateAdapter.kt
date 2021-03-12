@@ -9,13 +9,11 @@ import java.util.*
 class StateAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
         FragmentStateAdapter(fragmentManager, lifecycle) {
 
-    val fragments: ArrayList<Fragment> = arrayListOf(
+    private val fragments: ArrayList<Fragment> = arrayListOf(
             TasksFragment(),
             CalendarFragment(),
-            SettingsFragment()
+            ProfileFragment()
     )
-
-
 
     override fun getItemCount(): Int {
         return fragments.size

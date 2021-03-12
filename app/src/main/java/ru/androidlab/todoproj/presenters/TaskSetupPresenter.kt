@@ -15,7 +15,7 @@ import ru.androidlab.todoproj.views.activity.ITaskSetupView
 import java.util.*
 
 class TaskSetupPresenter(
-    val view: ITaskSetupView,
+    private val view: ITaskSetupView,
     private val dateTimePickerDialogProducer: DateTimePickerDialogProducer
 ) {
 
@@ -33,7 +33,6 @@ class TaskSetupPresenter(
         alarmIntent.putExtra(GET_TASK_ENTITY, task)
         val alarmPendingIntent = PendingIntent.getBroadcast(context, 110, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         calendar.timeInMillis = date.time
         calendar.set(Calendar.YEAR, date.year)
@@ -42,8 +41,21 @@ class TaskSetupPresenter(
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, alarmPendingIntent)
     }
 
+    fun showRemindInfo(remindDate: Date){
+        view.showRemindButton(false)
+        view.showRemindInfo(true)
+        view.setRemindInfo(remindDate)
+    }
+
+    fun removeReminder(){
+        view.showRemindButton(true)
+        view.showRemindInfo(false)
+    }
+    fun showCompleteForm(){
+        view.showCompleteForm()
+    }
+
     private companion object {
         const val REMIND_DATE = "remind_date"
-        const val REQUEST_CODE = 1001
     }
 }
