@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -25,6 +27,7 @@ class ProfileFragment : Fragment() {
 
     companion object {
         private const val RC_SIGN_IN = 120
+        const val AUTHORISATION_STATUS = false
     }
 
     private lateinit var mAuth: FirebaseAuth
@@ -53,6 +56,12 @@ class ProfileFragment : Fragment() {
 
             val intent = Intent(context, ProfileActivity::class.java)
             startActivity(intent)
+        }
+
+        if(user != null){
+            binding.constrainSignIn.visibility = View.VISIBLE
+        }else{
+            binding.constrainSingOut.visibility = View.VISIBLE
         }
 
         setProfileValue()
