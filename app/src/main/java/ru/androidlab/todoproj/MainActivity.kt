@@ -1,10 +1,8 @@
 package ru.androidlab.todoproj
 
 import android.content.Intent
-import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.view.Menu
 import android.view.MenuInflater
 import com.google.android.material.tabs.TabLayout
@@ -16,6 +14,7 @@ import ru.androidlab.todoproj.views.fragments.StateAdapter
 
 class MainActivity : AppCompatActivity() {
 
+    private var tag: Boolean = false
     private lateinit var binding: ActivityMainBinding
     companion object {
         const val RC_SIGN_IN = 120
@@ -41,7 +40,8 @@ class MainActivity : AppCompatActivity() {
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
             override fun onTabSelected(tab: TabLayout.Tab) {
-                //do nothing here
+                tag = tab.position != 0
+                invalidateOptionsMenu()
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -74,6 +74,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.main_menu, menu)
+        if(!tag){
+            menu.setGroupVisible(R.id.priority_menu, true)
+            menu.setGroupVisible(R.id.completed, true)
+            menu.setGroupVisible(R.id.all, true)
+        } else {
+            menu.setGroupVisible(R.id.priority_menu, false)
+            menu.setGroupVisible(R.id.completed, false)
+            menu.setGroupVisible(R.id.all, false)
+        }
         return true
     }
 }
