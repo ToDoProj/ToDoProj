@@ -17,9 +17,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import ru.androidlab.todoproj.MainActivity
 import ru.androidlab.todoproj.R
 import ru.androidlab.todoproj.databinding.FragmentProfileBinding
 import ru.androidlab.todoproj.views.activity.ProfileActivity
+import ru.androidlab.todoproj.views.activity.TaskSetupActivity
 
 class ProfileFragment : Fragment() {
 
@@ -58,6 +60,14 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
 
+        binding.btnSignIn.setOnClickListener {
+            signIn()
+            if(user != null){
+                binding.constrainSignIn.visibility = View.VISIBLE
+                binding.constrainSingOut.visibility = View.INVISIBLE
+            }
+        }
+
         if(user != null){
             binding.constrainSignIn.visibility = View.VISIBLE
         }else{
@@ -66,6 +76,11 @@ class ProfileFragment : Fragment() {
 
         setProfileValue()
         return binding.root
+    }
+
+    private fun signIn() {
+        val signInIntent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, MainActivity.RC_SIGN_IN)
     }
 
     fun setProfileValue() {
@@ -114,6 +129,9 @@ class ProfileFragment : Fragment() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("SignInActivity", "signInWithCredential:success")
                     Toast.makeText(context, "Enter success", Toast.LENGTH_SHORT).show()
+                    binding.constrainSignIn.visibility = View.VISIBLE
+                    binding.constrainSingOut.visibility = View.INVISIBLE
+                    setProfileValue()
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.d("SignInActivity", "signInWithCredential:failure")
