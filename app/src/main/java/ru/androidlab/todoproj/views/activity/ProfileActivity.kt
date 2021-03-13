@@ -34,15 +34,15 @@ class ProfileActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         val currentUser = mAuth.currentUser
 
+        if(currentUser != null){
+            startMainActivity()
+        }
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
-
-        mAuth = FirebaseAuth.getInstance()
-        val user = mAuth.currentUser
 
         binding.btnSignIn.setOnClickListener {
             signIn()

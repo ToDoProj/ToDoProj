@@ -12,13 +12,16 @@
 
         <receiver android:name=".util.NotifierAlarm"/>
 
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".views.activity.TaskSetupActivity" />
+            android:name=".views.activity.TaskSetupActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".views.activity.ProfileActivity">
+            android:name=".views.activity.ProfileActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
