@@ -8,6 +8,7 @@ import ru.androidlab.todoproj.data.AppDataBase
 import ru.androidlab.todoproj.data.TaskEntity
 import ru.androidlab.todoproj.data.repository.ITaskRepository
 import ru.androidlab.todoproj.data.repository.TaskRepository
+import java.util.*
 
 private val empty = TaskEntity()
 
@@ -35,14 +36,16 @@ class TaskViewModel (application: Application): AndroidViewModel(application){
         edit.value = edit.value?.copy(done = status)
     }
 
-    fun changeContent(title: String, priority: String) {
+    fun changeContent(title: String, priority: String, description: String) {
         val text = title.trim()
         val spinner = priority.trim()
+        val descr = description.trim()
         if (edit.value?.title == text) {
             return
         }
         edit.value = edit.value?.copy(title = text)
         edit.value = edit.value?.copy(priority = spinner)
+        edit.value = edit.value?.copy(description = descr)
     }
 
     fun removeById(id: Long) = repository.removeById(id)
