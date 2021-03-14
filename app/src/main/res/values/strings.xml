@@ -28,6 +28,7 @@
     <string name="open_main_app">Task has been completed. Do you want to open main application?</string>
     <string name="yes">YES</string>
     <string name="no">NO</string>
+    <string name="to_do_list">TO DO LIST</string>
 
     <string-array name="taskStatus">
         <item>Low</item>
