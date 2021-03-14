@@ -4,24 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
 
+    <group android:id="@+id/priority_menu">
+        <item
+            android:title="@string/priority_menu_item"
+            android:id="@+id/priority_menu_group"
+            app:showAsAction="ifRoom|withText">
+            <menu>
 
-<item
-    android:title="@string/priority_menu_item"
-    android:id="@+id/priority_menu_group"
-    app:showAsAction="ifRoom|withText">
-    <menu>
-        <item
-            android:id="@+id/low_priority"
-            android:title="@string/low_priority" />
-        <item
-            android:id="@+id/medium_priority"
-            android:title="@string/medium_priority" />
-        <item
-            android:id="@+id/high_priority"
-            android:title="@string/high_priority" />
-    </menu>
+                    <item
+                        android:id="@+id/low_priority"
+                        android:title="@string/low_priority" />
+                    <item
+                        android:id="@+id/medium_priority"
+                        android:title="@string/medium_priority" />
+                    <item
+                        android:id="@+id/high_priority"
+                        android:title="@string/high_priority" />
 
-</item>
+            </menu>
+
+        </item>
+    </group>
     <group android:id="@+id/completed">
         <item
             android:id="@+id/show_done"
