@@ -3,6 +3,7 @@ package ru.androidlab.todoproj.adapters
 import android.graphics.Color
 import android.graphics.Paint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -37,7 +38,11 @@ class Adapter(private val listener: ClickableTask) :
         override fun bind(item: TaskEntity) {
             binding.apply {
                 textTitle.text = item.title
-                description.text = item.description
+
+                if (item.description.isNotEmpty()) {
+                    reminder.visibility = View.VISIBLE
+                    dateTimeReminder.text = item.description
+                }
                 if (item.done) {
                     done.setImageResource(R.drawable.checked)
                     colorImage.setBackgroundColor(Color.parseColor("#FF5C00"))
@@ -67,7 +72,7 @@ class Adapter(private val listener: ClickableTask) :
         override fun areItemsTheSame(oldItem: TaskEntity, newItem: TaskEntity): Boolean {
             return when {
                 oldItem is TaskEntity && newItem is TaskEntity -> {
-                    oldItem.title == newItem.title
+                    oldItem == newItem
                 }
                 else -> true
             }

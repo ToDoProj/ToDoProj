@@ -108,9 +108,16 @@ class TaskSetupActivity : AppCompatActivity(), ITaskSetupView {
                     task.priority = binding.spinner.selectedItem.toString()
                     task.apply { taskViewModel.update(this) }
                 } else {
+                    var dateFormat = ""
+                    if (remindDate != null) {
+                        dateFormat =
+                            android.text.format.DateFormat.format("dd.MM.yy HH:mm", remindDate)
+                                .toString()
+                    }
                     taskViewModel.changeContent(
                         binding.editTextTitle.text?.toString() ?: "",
-                        binding.spinner.selectedItem?.toString() ?: ""
+                        binding.spinner.selectedItem?.toString() ?: "",
+                        dateFormat
                     )
                     taskViewModel.save()
                     if (remindDate != null) {
