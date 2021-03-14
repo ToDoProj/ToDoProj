@@ -17,7 +17,8 @@
 
         <activity
             android:name=".views.activity.TaskSetupActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:parentActivityName=".MainActivity"/>
 
         <activity
             android:name=".views.activity.ProfileActivity"
